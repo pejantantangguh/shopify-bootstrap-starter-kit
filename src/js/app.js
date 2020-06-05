@@ -1,1 +1,3 @@
-import vue from 'vue';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap';

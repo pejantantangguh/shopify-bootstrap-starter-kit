@@ -50,7 +50,7 @@
   </script>
 
   {% include 'script-tags', layout: 'theme' %}
-
+  {{ '//use.fontawesome.com/36587c15bf.js' | | script_tag }}
   {{ content_for_header }}
 </head>
 

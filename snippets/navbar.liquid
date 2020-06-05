@@ -1,0 +1,81 @@
+<nav role="navigation" class="navbar navbar-expand-lg navbar-sticky navbar-airy navbar-light bg-white bg-fixed-white">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ shop.url}} ">
+      {% if section.settings.logo != blank %}
+        {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+          <img src="{{ section.settings.logo | img_url: image_size }}"
+              srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+              alt="{{ section.settings.logo.alt | default: shop.name }}">
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
+    </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i>
+    </button>
+      <div class="navbar-collapse collapse" id="navbarCollapse">
+          <ul class="navbar-nav mx-auto">
+            {% for link in linklists[section.settings.menu].links %}
+              {% comment %} // If link has sub menu {% endcomment %}
+              {% if link.links != blank %}
+                <li class="nav-item dropdown">
+                 <a href="{{ link.url }}"  class="dropdown-item"
+                                            id="navbarDropdownMenuLink"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                    {{ link.title }}
+                    <i class="fa fa-angle-down"></i>
+                    {% comment %} {% include 'icon-arrow-down' %} {% endcomment %}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for childlink in link.links %}
+                        <a href="{{ childlink.url }}"   class="dropdown-item">
+                          {{ childlink.title }}
+                        </a>
+                    {% endfor %}
+                  </div>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a href="{{ link.url }}" class="dropdown-item">
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          <div class="d-flex align-items-center justify-content-between justify-content-lg-end mt-1 mb-2 my-lg-0">
+          {% comment %} Search Button {% endcomment %}
+          <div class="nav-item">
+            <form action="/search" method="get" role="search">
+              <input type="search"
+                name="q"
+                id="Search-{{ section.id }}"
+                value="{{ search.terms | escape }}"
+                placeholder="Search Our Store">
+
+              <button type="submit" class="button">
+                {% include 'icon-search' %}
+                <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+              </button>
+            </form>
+          </div>
+          {% comment %} Login User {% endcomment %}
+          <div class="nav-item">
+            <a class="navbar-icon-link" href="/account">
+              {% include 'icon-male-user' %}
+            </a>
+          </div>
+          {% comment %} Cart Dropdown {% endcomment %}
+          <div class="nav-item">
+          <a href="/cart" class="navbar-icon-link">
+            {% include 'icon-cart' %}
+            <div class="navbar-icon-link-badge"> {{ cart.item_count }} </div>
+          </a>
+          </div>
+          {% comment %} Cart Dropdown {% endcomment %}
+          </div>
+      </div>
+     
+    </div>
+  </nav>
