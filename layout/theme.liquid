@@ -33,7 +33,6 @@
   {%- endif -%}
 
   {% include 'social-meta-tags' %}
-  {% include 'style-tags', layout: 'theme' %}
   {% include 'css-variables' %}
 
   <script>
@@ -49,7 +48,6 @@
     };
   </script>
 
-  {% include 'script-tags', layout: 'theme' %}
   {{ '//use.fontawesome.com/36587c15bf.js' | | script_tag }}
   {{ content_for_header }}
 </head>
